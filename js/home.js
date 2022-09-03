@@ -2,9 +2,16 @@
 
 const loadCategory = async () => {
     const url = `https://openapi.programming-hero.com/api/news/categories`
-    const res = await fetch(url);
-    const data = await res.json();
-    displayCategory(data.data.news_category);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayCategory(data.data.news_category);
+
+    }
+    catch (error) {
+        console.log(error);
+    }
+
 }
 
 
@@ -24,17 +31,19 @@ const displayCategory = (categorys) => {
 
 }
 
-
-
 const categoryLoad = async id => {
     const url = `https://openapi.programming-hero.com/api/news/category/0${id}`
-    const res = await fetch(url);
-    const data = await res.json();
-    singleDisplayCategory(data.data);
+    try {
 
+        const res = await fetch(url);
+        const data = await res.json();
+        singleDisplayCategory(data.data);
+    }
+    catch (error) {
+        console.log(error);
+    }
 
 }
-
 
 const singleDisplayCategory = (categorys) => {
     // console.log(categorys);
@@ -90,12 +99,17 @@ const singleDisplayCategory = (categorys) => {
 
 }
 
-
 const cardDetails = async id => {
     const url = `https://openapi.programming-hero.com/api/news/${id}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    cardMoalDetails(data.data[0]);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        cardMoalDetails(data.data[0]);
+    }
+    catch (error) {
+        console.log(error);
+    }
+
 }
 
 const cardMoalDetails = card => {
@@ -109,8 +123,8 @@ const cardMoalDetails = card => {
       <div class="d-md-flex gap-3 d-xxl-flex  d-xl-flex d-sm-inline">
                                     <img class="rounded-circle img-logo" src="${card.author.img}" alt="">
                                     <div>
-                                        <p class="text-base-color fw-bold  ">${card.author.name ? card.author.name : "No Name Found"}</p>
-                                         <p class="card-text"><small class="text-muted">${card.author.published_date}</small></p>
+                                        <p class="text-base-color fw-bold  ">${card.author.name}</p>
+                                         <p class="card-text"><small class="text-muted">${card.author.published_date ? card.author.published_date : "No Publish Date"}</small></p>
                                     </div>
                                 </div>
     `;
