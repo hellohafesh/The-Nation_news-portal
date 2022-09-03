@@ -31,10 +31,13 @@ const displayCategory = (categorys) => {
 
 }
 
+
+
 const categoryLoad = async id => {
     const url = `https://openapi.programming-hero.com/api/news/category/0${id}`
     try {
 
+        toggleSpiner(true);
         const res = await fetch(url);
         const data = await res.json();
         singleDisplayCategory(data.data);
@@ -44,12 +47,22 @@ const categoryLoad = async id => {
     }
 
 }
+const toggleSpiner = isLoading => {
+    const loaderSection = document.getElementById('loder');
+    if (isLoading) {
+        loaderSection.classList.remove('d-none');
+    } else {
+        loaderSection.classList.add('d-none');
+    }
+
+}
 
 const singleDisplayCategory = (categorys) => {
     // console.log(categorys);
 
     const container = document.getElementById('card-section ');
     container.textContent = '';
+
     categorys.forEach(category => {
         const categoryDiv = document.createElement('div');
         categoryDiv.innerHTML = `
@@ -84,24 +97,18 @@ const singleDisplayCategory = (categorys) => {
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
-
-
-
-
-        `
+ `;
         container.appendChild(categoryDiv);
 
     })
-
+    toggleSpiner(false);
 }
 
 const cardDetails = async id => {
     const url = `https://openapi.programming-hero.com/api/news/${id}`;
     try {
+
         const res = await fetch(url);
         const data = await res.json();
         cardMoalDetails(data.data[0]);
@@ -128,6 +135,8 @@ const cardMoalDetails = card => {
                                     </div>
                                 </div>
     `;
+
+
 }
 
 
