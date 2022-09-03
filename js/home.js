@@ -120,7 +120,7 @@ const cardDetails = async id => {
 }
 
 const cardMoalDetails = card => {
-    console.log(card.title);
+
     const modalTitle = document.getElementById('card-modal-title');
     modalTitle.innerText = card.title;
     const modalDetails = document.getElementById('modal-body');
@@ -141,6 +141,6 @@ const cardMoalDetails = card => {
 
 
 
-cardDetails();
+cardDetails("0282e0e58a5c404fbd15261f11c2ab6a");
 
-loadCategory();
+loadCategory("01");
