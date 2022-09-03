@@ -37,7 +37,7 @@ const categoryLoad = async id => {
 
 
 const singleDisplayCategory = (categorys) => {
-    console.log(categorys);
+    // console.log(categorys);
 
     const container = document.getElementById('card-section ');
     container.textContent = '';
@@ -45,10 +45,10 @@ const singleDisplayCategory = (categorys) => {
         const categoryDiv = document.createElement('div');
         categoryDiv.innerHTML = `
 
-<div   onclick="cardDetails('${category._id}')" class="card mb-3 bg-card-color p-3" style="max-width: 100%;">
+<div   onclick="cardDetails('${category._id}')" class="card mb-3 bg-card-color p-3" style="max-width: 100%;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 <div class="row g-4  mb-3">
-                    <div class="col-md-4">
-                        <img src="${category.image_url}"
+                    <div class="col-md-2">
+                        <img src="${category.thumbnail_url}"
                             class="img-fluid rounded-start" alt="...">
                     </div>
                     <div class="col-md-8">
@@ -85,15 +85,38 @@ const singleDisplayCategory = (categorys) => {
 
         `
         container.appendChild(categoryDiv);
-        console.log();
+
     })
 
 }
 
 
-const cardDetails = id => {
-    console.log(id, "something");
+const cardDetails = async id => {
+    const url = `https://openapi.programming-hero.com/api/news/${id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    cardMoalDetails(data.data[0]);
 }
+
+const cardMoalDetails = card => {
+    console.log(card.title);
+    const modalTitle = document.getElementById('card-modal-title');
+    modalTitle.innerText = card.title;
+    const modalDetails = document.getElementById('modal-body');
+    modalDetails.innerHTML = `
+     <img  src="${card.image_url}" class="card-img-top" alt="..."></div>
+     <p>${card.details} </p>
+      <div class="d-md-flex gap-3 d-xxl-flex  d-xl-flex d-sm-inline">
+                                    <img class="rounded-circle img-logo" src="${card.author.img}" alt="">
+                                    <div>
+                                        <p class="text-base-color fw-bold  ">${card.author.name ? card.author.name : "No Name Found"}</p>
+                                         <p class="card-text"><small class="text-muted">${card.author.published_date}</small></p>
+                                    </div>
+                                </div>
+    `;
+}
+
+
 
 cardDetails();
 
