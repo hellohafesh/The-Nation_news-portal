@@ -1,9 +1,13 @@
+
+
 const loadCategory = async () => {
     const url = `https://openapi.programming-hero.com/api/news/categories`
     const res = await fetch(url);
     const data = await res.json();
     displayCategory(data.data.news_category);
 }
+
+
 const displayCategory = (categorys) => {
     const categorysContainer = document.getElementById('category-list');
     categorys.forEach(category => {
@@ -17,7 +21,10 @@ const displayCategory = (categorys) => {
     `;
         categorysContainer.appendChild(categorysDiv);
     });
+
 }
+
+
 
 const categoryLoad = async id => {
     const url = `https://openapi.programming-hero.com/api/news/category/0${id}`
@@ -25,18 +32,20 @@ const categoryLoad = async id => {
     const data = await res.json();
     singleDisplayCategory(data.data);
 
+
 }
+
 
 const singleDisplayCategory = (categorys) => {
     console.log(categorys);
 
-    const phonesContainer = document.getElementById('card-section ');
-    phonesContainer.textContent = '';
+    const container = document.getElementById('card-section ');
+    container.textContent = '';
     categorys.forEach(category => {
-        const phoneDiv = document.createElement('div');
-        phoneDiv.innerHTML = `
+        const categoryDiv = document.createElement('div');
+        categoryDiv.innerHTML = `
 
-<div class="card mb-3 bg-card-color p-3" style="max-width: 100%;">
+<div   onclick="cardDetails('${category._id}')" class="card mb-3 bg-card-color p-3" style="max-width: 100%;">
                 <div class="row g-4  mb-3">
                     <div class="col-md-4">
                         <img src="${category.image_url}"
@@ -75,11 +84,17 @@ const singleDisplayCategory = (categorys) => {
 
 
         `
-        phonesContainer.appendChild(phoneDiv);
+        container.appendChild(categoryDiv);
+        console.log();
     })
-
 
 }
 
+
+const cardDetails = id => {
+    console.log(id, "something");
+}
+
+cardDetails();
 
 loadCategory();
